@@ -15,11 +15,10 @@ You will need to provide a FAT12/16 logical disk image created with, preferably,
 python3 readfs.py path/to/file
 ```
 
-This will create an interactive session which will give you access to the root directory of the disk image. From there you have access to a bunch of commands. To see a list of all the available commands please run the following command:
+This will create an interactive session which will give you access to the root directory of the disk image. From there you have access to a bunch of commands. To see a list of all the available commands please run the following command `?`:
 
 ```
 /> ?
-
 +---------------+----------------------+-------------------------------------------------------+
 |    Command    |         Args         |                      Description                      |
 +---------------+----------------------+-------------------------------------------------------+
