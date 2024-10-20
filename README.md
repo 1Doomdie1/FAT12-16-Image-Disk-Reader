@@ -1,4 +1,4 @@
-# Disclamer
+# Disclaimer
 This software is still under development and it may contain bugs. If you find any please open an issue and I'll see what I can do!
 
 # Instalation
