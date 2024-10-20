@@ -37,7 +37,7 @@ Ok let's run the `ls` command and see it's output
 
 ![ls output](assets/ls_output.png)
 
-Ok, now let's change directories (`cd`) and then use the `ls`
+Ok, now let's change directories (`cd`) and then use `ls`
 
 ![cd and ls](assets/cd_ls.png)
 
