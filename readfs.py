@@ -12,7 +12,6 @@ init()
 if not from_file(argv[1]).startswith("DOS/MBR"): print("File is not a disk image."); exit()
 
 
-
 EVIDENCE_FILE = FileReader(argv[1])
 BOOTSECTOR = Bootsector(EVIDENCE_FILE.read_bytes())
 FAT_STRUCTURE = FAT(EVIDENCE_FILE.read_bytes(BOOTSECTOR.fat_offset(), BOOTSECTOR.fat_size())).parse()

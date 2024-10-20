@@ -2,13 +2,20 @@
 This software is still under development and it may contain bugs. If you find any please open an issue and I'll see what I can do!
 
 # Instalation
-After cloning the repo make sure you install the requirements
+After cloning the repo make sure you install the requirements:
+
+## Linux
 ```bash
-pip install -r requirements.txt
+sudo apt-get install libmagic1 -y
+pip install -r requirements_linux.txt
+```
+
+## Windows
+```bash
+pip install -r requirements_windows.txt
 ```
 
 # How to run
-
 You will need to provide a FAT12/16 logical disk image created with, preferably, FTK Imager or dd.
 
 ```
@@ -42,6 +49,20 @@ Ok, now let's change directories (`cd`) and then use `ls`
 ![cd and ls](assets/cd_ls.png)
 
 Play around with the tool and find out what it does.
+
+# Docker example
+In case there are any odd errors please use the this docker image. This image also contains 2 disk images, so there is no need to create a FAT disk image.
+```bash
+docker pull doomdie/fat12-16-image-disk-reader:0.1
+docker run -it doomdie/fat12-16-image-disk-reader:0.1
+```
+
+Once in the image run the following command
+```bash
+python3 readfs.py samples/fat_1gb_a_lot_of_data.001
+```
+
+From there you can use all the command showed above and and more.
 
 # What's next?
 - Improve session commands usability
