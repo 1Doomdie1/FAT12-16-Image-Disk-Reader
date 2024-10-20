@@ -1,0 +1,4 @@
+colorama
+prettytable
+python-magic
+wcwidth
