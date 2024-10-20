@@ -1,3 +1,6 @@
+# Disclamer
+This software is still under development and it may contain bugs. If you find any please open an issue and I'll see what I can do!
+
 # Instalation
 After cloning the repo make sure you install the requirements
 ```bash
@@ -38,6 +41,8 @@ Ok let's run the `ls` command and see it's output
 Ok, now let's change directories (`cd`) and then use the `ls`
 
 ![cd and ls](assets/cd_ls.png)
+
+Play around with the tool and find out what it does.
 
 # What's next?
 - Improve session commands usability
