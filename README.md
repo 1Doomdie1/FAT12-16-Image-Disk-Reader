@@ -4,7 +4,7 @@ This software is still under development and it may contain bugs. If you find an
 # Instalation
 After cloning the repo make sure you install the requirements
 ```bash
-pip install -r requirements
+pip install -r requirements.txt
 ```
 
 # How to run
