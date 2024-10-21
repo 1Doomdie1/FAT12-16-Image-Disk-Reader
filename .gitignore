@@ -5,8 +5,6 @@ __pycache__/
 samples/
 # C extensions
 *.so
-.dockerignore
-dockerfile
 
 # Distribution / packaging
 .Python

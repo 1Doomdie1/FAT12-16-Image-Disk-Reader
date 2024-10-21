@@ -53,8 +53,8 @@ Play around with the tool and find out what it does.
 # Docker example
 In case there are any odd errors please use the this docker image. This image also contains 2 disk images, so there is no need to create a FAT disk image.
 ```bash
-docker pull doomdie/fat12-16-image-disk-reader:0.1
-docker run -it doomdie/fat12-16-image-disk-reader:0.1
+docker pull doomdie/fat12-16-image-disk-reader:v0.2.0
+docker run -it doomdie/fat12-16-image-disk-reader:v0.2.0
 ```
 
 Once in the image run the following command
