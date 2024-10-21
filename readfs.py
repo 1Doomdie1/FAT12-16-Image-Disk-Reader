@@ -1,21 +1,22 @@
-from os                                     import system
-from sys                                    import platform, argv
-from shlex                                  import split
-from magic                                  import from_file
-from colorama                               import init, Style, Fore
-from prettytable                            import PrettyTable
-from src.managers                           import FileReader
-from src.filesystems.FAT.parsers.fat        import FAT
-from src.filesystems.FAT.parsers.dirparser  import DirParser
-from src.filesystems.FAT.parsers.bootsector import Bootsector
+from os                                         import system
+from sys                                        import platform, argv
+from shlex                                      import split
+from magic                                      import from_file
+from colorama                                   import init, Style, Fore
+from prettytable                                import PrettyTable
+from src.managers.file                          import Reader
+from src.filesystems.FAT.main_blocks.fat        import FAT
+from src.filesystems.FAT.main_blocks.dir        import Dir
+from src.filesystems.FAT.main_blocks.bootsector import Bootsector
 init()
 if not from_file(argv[1]).startswith("DOS/MBR"): print("File is not a disk image."); exit()
 
 
-EVIDENCE_FILE = FileReader(argv[1])
+
+EVIDENCE_FILE = Reader(argv[1])
 BOOTSECTOR = Bootsector(EVIDENCE_FILE.read_bytes())
 FAT_STRUCTURE = FAT(EVIDENCE_FILE.read_bytes(BOOTSECTOR.fat_offset(), BOOTSECTOR.fat_size())).parse()
-ROOT_DIRECTORY = DirParser(EVIDENCE_FILE.read_bytes(BOOTSECTOR.rd_offset(), BOOTSECTOR.rd_size()))
+ROOT_DIRECTORY = Dir(EVIDENCE_FILE.read_bytes(BOOTSECTOR.rd_offset(), BOOTSECTOR.rd_size()))
 CL2_SECTOR = (BOOTSECTOR.rd_offset() + BOOTSECTOR.rd_size()) // BOOTSECTOR.bytes_per_sector()
 
 GLOBAL_PATH = ""
@@ -51,7 +52,7 @@ while True:
             if entry:
                 valid_path = True
                 dir_sector = entry.sector_chain(FAT_STRUCTURE, CL2_SECTOR, BOOTSECTOR.sectors_per_cluster())[0]
-                tmp_dir_data = DirParser(EVIDENCE_FILE.read_bytes(dir_sector * BOOTSECTOR.bytes_per_sector(), BOOTSECTOR.bytes_per_sector() * 32))
+                tmp_dir_data = Dir(EVIDENCE_FILE.read_bytes(dir_sector * BOOTSECTOR.bytes_per_sector(), BOOTSECTOR.bytes_per_sector() * 32))
 
                 if dir_name == "..":
                     tmp_path = "/".join(GLOBAL_PATH.split("/")[:-1])
