@@ -2,13 +2,13 @@ from os                                         import system
 from sys                                        import platform, argv
 from shlex                                      import split
 from magic                                      import from_file
-from colorama                                   import init, Style, Fore
+from colorama                                   import Style, Fore
 from prettytable                                import PrettyTable
 from src.managers.file                          import Reader
 from src.filesystems.FAT.main_blocks.fat        import FAT
 from src.filesystems.FAT.main_blocks.dir        import Dir
 from src.filesystems.FAT.main_blocks.bootsector import Bootsector
-init()
+from src.filesystems.FAT.parsers.hex            import Entry_Hex_Parser
 if not from_file(argv[1]).startswith("DOS/MBR"): print("File is not a disk image."); exit()
 
 
@@ -103,11 +103,7 @@ while True:
             if cmd[1] == "raw":
                 print(raw)
             elif cmd[1] == "hex":
-                for i in range(0, len(raw), 16):
-                    relative_offset = f"{Fore.CYAN}{hex(i)[2:].upper().rjust(8, '0')}{Style.RESET_ALL}"
-                    hex_line = raw[i:i+16].hex(" ").upper()
-                    decoded_hex = " ".join([ f"{Fore.MAGENTA}{chr(j)}{Style.RESET_ALL}" if 33 <= j <= 126 else "." for j in raw[i:i+16]])
-                    print(f'| {relative_offset} | {hex_line} | {decoded_hex} |')
+                print(entry.hex_view())
             else:
                 print(f"{Fore.RED}Unknow param:{Style.RESET_ALL} {cmd[1]}")
         else:
