@@ -1,6 +1,6 @@
 from src.filesystems.FAT.parsers.entry import Entry
 
-class DirParser:
+class Dir:
     def __init__(self, bytes: bytes):
         self.bytes = bytes
 
