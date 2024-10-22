@@ -12,7 +12,7 @@ from src.filesystems.FAT.parsers.hex            import Entry_Hex_Parser
 if not from_file(argv[1]).startswith("DOS/MBR"): print("File is not a disk image."); exit()
 
 
-
+ENTRY_HEX_PARSER = Entry_Hex_Parser()
 EVIDENCE_FILE = Reader(argv[1])
 BOOTSECTOR = Bootsector(EVIDENCE_FILE.read_bytes())
 FAT_STRUCTURE = FAT(EVIDENCE_FILE.read_bytes(BOOTSECTOR.fat_offset(), BOOTSECTOR.fat_size())).parse()
@@ -47,7 +47,7 @@ while True:
         tmp_dir_data, tmp_path, valid_path = dir_data, "", False
 
         for dir_name in path:
-            entry = tmp_dir_data.get_entry(dir_name, ["Directory"])
+            entry = tmp_dir_data.get_entry(dir_name, tuple("Directory"))
             
             if entry:
                 valid_path = True
@@ -96,18 +96,18 @@ while True:
         else:
             print(f"{Fore.RED}No such file or directory:{Style.RESET_ALL} {cmd[2]}")
     elif cmd[0] == "entry":
-        if len(cmd) < 3: print(f"{Fore.RED}Missing pagams:{Style.RESET_ALL} entry (raw|hex) (FILE|DIR)"); continue
-        entry = dir_data.get_entry(cmd[2])
+        if len(cmd) < 3: print(f"{Fore.RED}Missing pagams:{Style.RESET_ALL} entry (FILE|DIR) (raw|hex)"); continue
+        entry = dir_data.get_entry(cmd[1])
         if entry:
             raw = b"".join(entry.raw())
-            if cmd[1] == "raw":
+            if cmd[2] == "raw":
                 print(raw)
-            elif cmd[1] == "hex":
-                print(entry.hex_view())
+            elif cmd[2] == "hex":
+                print(ENTRY_HEX_PARSER.hex_view(raw))
             else:
-                print(f"{Fore.RED}Unknow param:{Style.RESET_ALL} {cmd[1]}")
+                print(f"{Fore.RED}Unknow param:{Style.RESET_ALL} {cmd[2]}")
         else:
-            print(f"{Fore.RED}No such file or directory:{Style.RESET_ALL} {cmd[2]}")
+            print(f"{Fore.RED}No such file or directory:{Style.RESET_ALL} {cmd[1]}")
 
     elif cmd[0] in ("pwd", "cwd"):
         print(GLOBAL_PATH if GLOBAL_PATH else "/")
@@ -125,7 +125,7 @@ while True:
             ("clear|cls", "", "Clears terminal"),
             ("cwd|pwd", "", "Prints the full path to the current working directory"),
             ("chain", "(cl|se|*) (FILE)", "Display cluster and sector or both chains"),
-            ("entry", "(hex|raw) (FILE/DIR)", "Display entry (file or directory) bytes"),
+            ("entry", "(FILE/DIR) (hex|raw)", "Display entry (file or directory) bytes"),
             ("exit|quit|e|q", "", "Closes session")
         ))
         print(table)

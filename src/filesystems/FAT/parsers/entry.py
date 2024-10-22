@@ -1,15 +1,9 @@
-from .hex import Entry_Hex_Parser
-
 class Entry:
     def __init__(self, bytes: bytes):
         self.entry_data = [bytes[i:i+32] for i in range(0, len(bytes), 32)]
 
     def raw(self):
         return self.entry_data
-
-    def hex_view(self):
-        parser = Entry_Hex_Parser(b"".join(self.entry_data))
-        return parser.hex_view()
 
     def name(self) -> str:
         name = ""
