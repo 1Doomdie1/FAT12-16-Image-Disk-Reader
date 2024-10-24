@@ -1,7 +1,7 @@
 class Entry:
     def __init__(self, bytes: bytes):
         self.entry_data = [bytes[i:i+32] for i in range(0, len(bytes), 32)]
-    
+
     def raw(self):
         return self.entry_data
 
@@ -9,7 +9,7 @@ class Entry:
         name = ""
         if len(self.entry_data) > 1:
             for name_chuncks in self.entry_data[:-1][::-1]:
-                name_parts = (name_chuncks[0x1 :0x10], name_chuncks[0xE :0x19], name_chuncks[0x1C:0x1F])
+                name_parts = (name_chuncks[0x1 :0xA], name_chuncks[0xE :0x19], name_chuncks[0x1C:0x1F])
                 for name_part in name_parts:
                     for i in range(0, len(name_part), 2):
                         if name_part[i:i+2] in (b'\x0f\x00', b'\xff\xff', b'\xff\xf8', b'\xff\xf7', b'\xff'): break
