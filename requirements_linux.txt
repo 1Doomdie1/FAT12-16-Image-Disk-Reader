@@ -1,4 +1,7 @@
-colorama
-prettytable
-python-magic
+rich
+mdurl
 wcwidth
+Pygments
+python-magic
+markdown-it-py
+typing_extensions

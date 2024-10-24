@@ -34,7 +34,7 @@ class Dir:
                 pointer += offset
         return entries
 
-    def get_entry(self, name:str, type: tuple = tuple("*")) -> Entry | None:
+    def get_entry(self, name:str, type: list = ["*"]) -> Entry | None:
         for entry in self.entries():
             if (entry.name() == name) and (entry.type() in type if type[0] != "*" else True):
                 return entry
