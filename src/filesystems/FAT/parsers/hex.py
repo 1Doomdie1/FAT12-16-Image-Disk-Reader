@@ -55,13 +55,14 @@ class Entry_Hex_Parser:
         access_day    = self.__color_txt (data[0x12:0x14].hex(" ").upper(), self.ACCESS_DAY_COLOR)
         cluster_high  = self.__color_txt (data[0x14:0x16].hex(" ").upper(), self.CL_HIGH_COLOR   )
         written_time  = self.__color_txt (data[0x16:0x18].hex(" ").upper(), self.WRITTEN_AT_COLOR)
-        cluster_low   = self.__color_txt (data[0x18:0x1A].hex(" ").upper(), self.CL_LOW_COLOR    )
-        size          = self.__color_txt (data[0x1A:    ].hex(" ").upper(), self.SIZE_COLOR      )
+        written_day   = self.__color_txt (data[0x18:0x1A].hex(" ").upper(), self.WRITTEN_AT_COLOR)
+        cluster_low   = self.__color_txt (data[0x1A:0x1C].hex(" ").upper(), self.CL_LOW_COLOR    )
+        size          = self.__color_txt (data[0x1C:    ].hex(" ").upper(), self.SIZE_COLOR      )
         decoded_hex_2 = " ".join(self.__color_txt(chr(i), self.NAME_COLOR) if 33 <= i <= 126 else "." for i in data[0x10:])
 
         return (
             (f"{alloc_status} {name} {file_attr} {reserved} {tenths_of_sec} {hms}", decoded_hex_1),
-            (f"{create_day} {access_day} {cluster_high} {written_time} {cluster_low} {size}", decoded_hex_2)
+            (f"{create_day} {access_day} {cluster_high} {written_time} {written_day} {cluster_low} {size}", decoded_hex_2)
         )
 
     def hex_view(self, entry: bytes) -> str:
